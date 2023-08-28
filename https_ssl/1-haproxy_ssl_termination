@@ -34,13 +34,13 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 
 
-frontend http-front
+frontend http_front
         bind *:443 ssl crt /etc/letsencrypt/live/www.lanaarafat.tech/fullchain.pem
         http-request add-header X-Forwarded-Proto http
-        http-request redirect scheme if !{ ssl_fc }
+        http-request redirect scheme if https !{ ssl_fc }
         use_backend http_back
 
 backend http_back 
         redirect scheme https if !{ ssl_fc }
-        server 5731-web-01 3.87.98.242 
-        server 5731-web-02  18.234.210.137
+        server 5731-web-01 3.87.98.242:80
+        server 5731-web-02  18.234.210.137:80
